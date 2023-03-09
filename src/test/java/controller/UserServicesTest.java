@@ -64,4 +64,18 @@ class UserServicesTest {
         user=uS.findByIndex(3);
         assertEquals("User{id=3, name='ddddsf', province=Province{id=3, name='Da Nang'}}",user.toString());
     }
+    @Test
+    void testDelete(){
+        uS.delete(3);
+        ArrayList<User> list=uS.readAll();
+        assertEquals("[User{id=1, name='phuc', province=Province{id=1, name='Ha Noi'}}, " +
+                "User{id=2, name='hai', province=Province{id=2, name='Ho Chi Minh'}}, " +
+                "User{id=4, name='chau', province=Province{id=1, name='Ha Noi'}}, " +
+                "User{id=5, name='thao', province=Province{id=3, name='Da Nang'}}]",list.toString());
+        uS.delete(2);
+        list=uS.readAll();
+        assertEquals("[User{id=1, name='phuc', province=Province{id=1, name='Ha Noi'}}, " +
+                "User{id=4, name='chau', province=Province{id=1, name='Ha Noi'}}, " +
+                "User{id=5, name='thao', province=Province{id=3, name='Da Nang'}}]",list.toString());
+    }
 }

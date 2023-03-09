@@ -11,10 +11,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UserServices implements CRUD<User>{
-    private static final String VIEW_USER_PROVINCE="select * from view_all";
-    private static final String CREATE_PROVINCE="insert into user(name,province_id) values(?,?)";
-    private static final String VIEW_1_USER="select * from view_all where id=?";
+    private final String VIEW_USER_PROVINCE="select * from view_all";
+    private final String CREATE_PROVINCE="insert into user(name,province_id) values(?,?)";
+    private final String VIEW_1_USER="select * from view_all where id=?";
     private final String UPDATE_A_USER="update user set name=?,province_id=? where id=?";
+    private final String DELETE_A_USER="delete from user where id=?";
     @Override
     public void create(User object) {
         try(Connection connection= connector.getConnection();
@@ -83,6 +84,12 @@ public class UserServices implements CRUD<User>{
 
     @Override
     public void delete(int index) {
-
+        try(Connection connection= connector.getConnection();
+            PreparedStatement preparedStatement=connection.prepareStatement(DELETE_A_USER)) {
+            preparedStatement.setInt(1,index);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } ;
     }
 }

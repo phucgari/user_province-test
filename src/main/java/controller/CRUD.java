@@ -9,7 +9,7 @@ public interface CRUD<E> {
     String jdbcUSER="root";
     String jdbcPW="123456";
     Connector connector=new Connector(jdbcURL,jdbcUSER,jdbcPW);
-    public default Connector getConnector() {
+    default Connector getConnector() {
         return connector;
     }
     void create(E object);
